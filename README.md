@@ -163,11 +163,9 @@ If Gemini API quota is exceeded:
 
 Add screenshots or demo video here:
 
-```
-/screenshot.png
-```
+<img width="1366" height="768" alt="Screenshot 2026-02-25 235718" src="https://github.com/user-attachments/assets/dd499b96-fa4a-4f68-8cc2-154af7c0eb14" />
 
----
+
 
 ## ⭐ Key Features
 
