@@ -9,12 +9,11 @@ dotenv.config();
 const app = express();
 
 
-
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://genai-rag-assistant-ten.vercel.app/"
+      "https://genai-rag-assistant-ten.vercel.app"
     ],
     methods: ["GET", "POST"],
     credentials: true,
@@ -48,7 +47,6 @@ app.post("/api/chat", async (req, res) => {
       content: message,
     });
 
-    // 🧠 Run RAG
     const result = await runRAG(message);
 
     sessions[sessionId].push({
@@ -60,6 +58,7 @@ app.post("/api/chat", async (req, res) => {
       reply: result.reply,
       retrievedChunks: result.retrievedChunks,
     });
+
   } catch (err) {
     console.error("SERVER ERROR:", err.message);
 
