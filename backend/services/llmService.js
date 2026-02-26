@@ -6,8 +6,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 console.log("Using API KEY:", process.env.GEMINI_API_KEY);
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// ✅ MOST STABLE FREE MODEL
 const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash-latest",
 });
