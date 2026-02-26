@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 
+
+const API_URL = "https://rag-backend-pdui.onrender.com/";
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -9,39 +12,53 @@ function App() {
   async function sendMessage() {
     if (!input.trim()) return;
 
-    const userMessage = { role: "user", text: input };
-    setMessages(prev => [...prev, userMessage]);
+    const userText = input;
+
+    const userMessage = {
+      role: "user",
+      text: userText,
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      const res = await fetch("https://your-backend-name.onrender.com/api/chat", {
+      const res = await fetch(`${API_URL}/api/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           sessionId: "demo",
-          message: input
-        })
+          message: userText,
+        }),
       });
 
       const data = await res.json();
 
-      // ✅ ONLY render STRING, NEVER object
+      // ✅ SAFE RESPONSE HANDLING
       const aiText =
         typeof data.reply === "string"
           ? data.reply
           : "I don't have enough information.";
 
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev,
-        { role: "assistant", text: aiText }
+        {
+          role: "assistant",
+          text: aiText,
+        },
       ]);
-
     } catch (err) {
-      console.error(err);
-      setMessages(prev => [
+      console.error("FETCH ERROR:", err);
+
+      setMessages((prev) => [
         ...prev,
-        { role: "assistant", text: "Server error." }
+        {
+          role: "assistant",
+          text: "Server error.",
+        },
       ]);
     } finally {
       setLoading(false);
@@ -70,9 +87,13 @@ function App() {
       <div className="input-row">
         <input
           value={input}
-          onChange={e => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Ask something..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") sendMessage();
+          }}
         />
+
         <button onClick={sendMessage}>Send</button>
       </div>
     </div>
