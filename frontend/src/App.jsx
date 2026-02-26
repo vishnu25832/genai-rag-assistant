@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 
 
-const API_URL = "https://rag-backend-pdui.onrender.com/";
+const API_URL = "https://rag-backend-pdui.onrender.com";
 
 function App() {
   const [messages, setMessages] = useState([]);
